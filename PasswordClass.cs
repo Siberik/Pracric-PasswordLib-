@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PasswordLibarary2
@@ -22,32 +23,32 @@ namespace PasswordLibarary2
             var count = 0;
 
             //метод, проверящий сложность пароля от 7 символов и более
-            if (password == @".{7,}")
+            if (Regex.IsMatch(password, @".{7,}", RegexOptions.IgnoreCase))
             {
                 count = count + 1;
 
                 //метод, проверяющий наличие в пароле нижнего регистра
-                if (password == @"(?=.*[a-z])")
+                if (Regex.IsMatch(password, @"(?=.*[a-z])"))
                 {
                     count = count + 1;
                 }
                 //метод, проверящий наличие в пароле верхнего регистра 
-                if (password == @"(?=.*[A-Z])")
+                if (Regex.IsMatch(password, @"(?=.*[A-Z])"))
                 {
                     count = count + 1;
                 }
                 //метод, проверяющий наличие в пароле цифр
-                if (password == @"(?=.*\d)")
+                if (Regex.IsMatch(password, @"(?=.*\d)", RegexOptions.IgnoreCase))
                 {
                     count = count + 1;
                 }
                 //метод, проверяющий наличие Кириллицы в пароле
-                if (password == @"(?=.*[А-Я])||(?=.*[а-я])")
+                if (Regex.IsMatch(password, (@"\p{IsCyrillic}+"), RegexOptions.IgnoreCase))
                 {
                     throw new Exception("Кириллические символы запрещены при вводе пароля");
                 }
                 //метод, проверяющий наличие спец символов
-                if (password == @"[\!\@\\\*\(\)]")
+                if (Regex.IsMatch(password, @"(?=.*[!@#$%^&*])", RegexOptions.IgnoreCase))
                 {
                     count = count + 1;
                 }
@@ -70,9 +71,9 @@ namespace PasswordLibarary2
         /// </returns>
         public bool CheckPassword(string password)
         {
-            if (password == @"((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})")
+            if (Regex.IsMatch(password, @"((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})", RegexOptions.IgnoreCase))
             {
-                if (password == @"[\!\@\\\*\(\)\^\$\]")
+                if (Regex.IsMatch( password,@"[\!\@\\\*\(\)\^\$\]", RegexOptions.IgnoreCase))
                 {
                     return true;
                 }
