@@ -1,6 +1,7 @@
 ﻿using System;
 using PasswordLibarary2;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PasswordLibraryTests
 {
@@ -18,10 +19,10 @@ namespace PasswordLibraryTests
 
             //Act
             PasswordClass c = new PasswordClass();
-            bool actual = c.CheckPassword(password);
+
 
             //Assert
-            Assert.IsFalse(actual);
+            Assert.ThrowsException<Exception>(() => c.CheckPassword(password));
         }
         /// <summary>
         /// Проверка слишком короткого пароля
@@ -71,22 +72,7 @@ namespace PasswordLibraryTests
             //Assert
             Assert.AreEqual(actual, excepted);
         }
-        /// <summary>
-        /// Проверка только цифры
-        /// </summary>
-        [TestMethod]
-        public void CheckPassword_OnlyLetters_ReturnedTrue()
-        {
-            //Arrange
-            string password = "12341236401";
 
-            //Act
-            PasswordClass c = new PasswordClass();
-            bool actual = c.CheckPassword(password);
-
-            //Assert
-            Assert.IsFalse(actual);
-        }
         /// <summary>
         /// Проверка пустую строку
         /// </summary>
@@ -120,6 +106,9 @@ namespace PasswordLibraryTests
             //Assert
             Assert.AreEqual(actual, excepted);
         }
+        /// <summary>
+        /// Проверка на короткий пароль
+        /// </summary>
         [TestMethod]
         public void PasswordStrengthCheker_ShortPass_ReturnedException()
         {
@@ -134,7 +123,147 @@ namespace PasswordLibraryTests
             //Assert
             Assert.AreEqual(actual, excepted);
         }
+        /// <summary>
+        /// Проверка на короткий пароль
+        /// </summary>
+        [TestMethod]
+        public void CheckPassword_ShortPass_ReturnedException()
+        {
+            //Arrange
+            string password = "1dK$";
 
 
+            //Act
+
+            PasswordClass c = new PasswordClass();
+
+            //Assert
+            Assert.ThrowsException<Exception>(() => c.CheckPassword(password));
+        }
+
+       
+        /// <summary>
+        /// Проверка на строчные буквы
+        /// </summary>
+        [TestMethod]
+        public void CheckPassword_LowerCase_ReturnedException()
+        {
+            //Arrange
+            string password = "strokasymb";
+
+
+            //Act
+
+            PasswordClass c = new PasswordClass();
+
+            //Assert
+            Assert.ThrowsException<Exception>(() => c.CheckPassword(password));
+        }
+        /// <summary>
+        /// Проверка на заглавные буквы
+        /// </summary>
+        [TestMethod]
+        public void CheckPassword_UpperCase_ReturnedException()
+        {
+            //Arrange
+            string password = "SDLUTRHHNMH";
+
+
+            //Act
+
+            PasswordClass c = new PasswordClass();
+
+            //Assert
+            Assert.ThrowsException<Exception>(() => c.CheckPassword(password));
+        }
+        /// <summary>
+        /// Проверка на заглавные буквы
+        /// </summary>
+        [TestMethod]
+        public void CheckPassword_OnlyNumbers_ReturnedException()
+        {
+            //Arrange
+            string password = "12341236401";
+
+
+            //Act
+
+            PasswordClass c = new PasswordClass();
+
+            //Assert
+            Assert.ThrowsException<Exception>(() => c.CheckPassword(password));
+        }
+        /// <summary>
+        /// Проверка на заглавные буквы
+        /// </summary>
+        [TestMethod]
+        public void CheckPassword_OnlySpecialSymbols_ReturnedException()
+        {
+            //Arrange
+            string password = "$$$$$()&*^%@@";
+
+
+            //Act
+
+            PasswordClass c = new PasswordClass();
+
+            //Assert
+            Assert.ThrowsException<Exception>(() => c.CheckPassword(password));
+        }
+        /// <summary>
+        /// Проверка на верный пароль
+        /// </summary>
+        [TestMethod]
+        public void CheckPassword_RightPasswowrd_ReturnedException()
+        {
+            //Arrange
+            string password = "12HTkk^$@5";
+
+
+            //Act
+
+            PasswordClass c = new PasswordClass();
+            bool actual = c.CheckPassword(password);
+            //Assert
+            Assert.IsTrue(actual);
+
+        }
+        /// <summary>
+        /// Проверка на верный пароль
+        /// </summary>
+        [TestMethod]
+        public void CheckPassword_RightPasswowrd2_ReturnedException()
+        {
+            //Arrange
+            string password = "abVGH$@5";
+
+
+            //Act
+
+            PasswordClass c = new PasswordClass();
+            bool actual = c.CheckPassword(password);
+            //Assert
+            Assert.IsTrue(actual);
+
+        }
+        /// <summary>
+        /// Проверка на верный пароль
+        /// </summary>
+        [TestMethod]
+        public void CheckPassword_RightPasswowrd3_ReturnedException()
+        {
+            //Arrange
+            string password = "abVGH$@5abVGH$@";
+
+
+            //Act
+
+            PasswordClass c = new PasswordClass();
+            bool actual = c.CheckPassword(password);
+            //Assert
+            Assert.IsTrue(actual);
+
+        }
     }
+
 }

@@ -73,18 +73,21 @@ namespace PasswordLibarary2
         {
             if (Regex.IsMatch(password, @"((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})", RegexOptions.IgnoreCase))
             {
-                if (Regex.IsMatch( password,@"[\!\@\\\*\(\)\^\$\]", RegexOptions.IgnoreCase))
+                if (Regex.IsMatch( password,@"(?=.*[\!\@\\\*\(\)\^\$])", RegexOptions.IgnoreCase))
                 {
                     return true;
                 }
                 else
                 {
-                    return false;
+                    throw new Exception("Не соответствует критериям");
                 }
             }
+            else
+            {
+                throw new Exception("Полное несоответствие");
+            }
 
-
-            return false;
+            return true;
         }
     }
 }
