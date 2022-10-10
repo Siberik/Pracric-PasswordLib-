@@ -74,7 +74,7 @@ namespace PasswordLibraryTests
         }
 
         /// <summary>
-        /// Проверка пустую строку
+        /// Проверка на нормальный пароль
         /// </summary>
         [TestMethod]
         public void PasswordStrengthCheker_NormalPassword_Returned1()
